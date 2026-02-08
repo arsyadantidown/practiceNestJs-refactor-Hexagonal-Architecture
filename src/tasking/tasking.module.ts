@@ -1,9 +1,16 @@
 import { Module } from '@nestjs/common';
-import { TaskingService } from './tasking.service';
-import { TaskingController } from './tasking.controller';
+import { TaskingService } from './application/tasking.service';
+import { TaskingController } from './presentation/tasking.controller';
+import { TaskMemoryRepository } from './infrastructure/task.repository.memory';
 
 @Module({
   controllers: [TaskingController],
-  providers: [TaskingService],
+  providers: [
+    TaskingService,
+  {
+    provide:'TASK_REPOSITORY',
+    useClass:TaskMemoryRepository,
+  }],
 })
+
 export class TaskingModule {}
